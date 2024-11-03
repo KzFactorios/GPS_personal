@@ -4,6 +4,9 @@ Date: 2024-10-24
 
   Features:
     - Show the player position
+    - Added flib dependency and gui lib. Output written as a gui
 
   TODO:
     - Migrations
+    - TODO update every ? seconds setting
+    - TODO only update when not in map view
