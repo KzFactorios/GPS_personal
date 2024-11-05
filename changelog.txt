@@ -4,9 +4,13 @@ Date: 2024-10-24
 
   Features:
     - Show the player position
-    - Added flib dependency and gui lib. Output written as a gui
+    - Added flib dependency and mod-gui lib. Output written as a mod-gui
+    - Took a stab at styling - more to come
+    - Got rid of any storage usage within this mod - simplified
+    - Only updates coords when not in map view
 
   TODO:
+    - test multiplayer
+    - test on laptop
     - Migrations
     - TODO update every ? seconds setting
-    - TODO only update when not in map view

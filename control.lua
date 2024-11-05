@@ -1,42 +1,37 @@
---require("FormatPlayerPosition")
-local gui = require("lib/gui")
-local migration = require("__flib__.migration")
-local mod_version_migrations = require("migrations/mod-version-migrations")
-local ShowGPSGUI = require("scripts/GUI/ShowGPSGUI")
+-- switch to mod-gui approach
+-- https://forums.factorio.com/viewtopic.php?t=53020
+-- https://github.com/Bilka2/NewGamePlus
 
-script.on_init(function()
-    gui.init()
-    gui.build_lookup_tables()
-    ShowGPSGUI.on_init()
-  end)
+-- styles  https://lua-api.factorio.com/latest/prototypes/GuiStyle.html
 
-script.on_load(function()
-    gui.build_lookup_tables()
+
+local __wct_gps_gui = require("gui")
+
+local _runOnce = false
+local _play_time_seconds = -1
+
+script.on_event(defines.events.on_player_changed_position, function(event)
+    -- update every ? seconds
+    -- TODO make this a setting
+    local previous = _play_time_seconds
+    _play_time_seconds = math.floor(event.tick / 10)
+    if previous == _play_time_seconds then return end
+
+    local player = game.players[event.player_index]
+    __wct_gps_gui.make_gui(player)
+   -- game.print("on player changed position")
 end)
 
-script.on_configuration_changed(function(event)
-    migration.on_config_changed(event, mod_version_migrations)
-  end)
-
-
-
-function OnClick(event)                      --
-    local index = event.player_index
-    --[[if event.element == GetDisplay(index) then --
-        GetDisplay(index).destroy()
-        if event.button == defines.mouse_button_type.left then
-            storage.wct_gpsDisplay[index].Location = Display[storage.wct_gpsDisplay[index].Location].Next
-        elseif event.button == defines.mouse_button_type.right then
-            --storage.wct_gpsDisplay[index].Variant = Display[storage.wct_gpsDisplay[index].Variant].Next
+script.on_event(defines.events.on_tick, function(event)
+    if not _runOnce then
+        -- this is an init so do for all players
+        for _, player in pairs(game.connected_players) do
+            __wct_gps_gui.reset_gui(player)
+            __wct_gps_gui.make_gui(player)
         end
-        EnsureDisplay(index)
-    end]]
-end
 
-script.on_event(defines.events.on_gui_click, OnClick)
+        _runOnce = true
+        game.print("run once ran")
+    end
 
-script.on_event(defines.events.on_tick, ShowGPSGUI.updateGPS)
-script.on_event(defines.events.on_player_created, ShowGPSGUI.on_player_created)
-script.on_event(defines.events.on_player_removed, ShowGPSGUI.on_player_removed)
-gui.add_handlers(ShowGPSGUI.handlers)
-gui.register_handlers()
+end)
