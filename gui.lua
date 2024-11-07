@@ -11,53 +11,79 @@ __wct_gps_gui.ensure_gui = function(player)
             name = "__wct_gps_gui_root",
             type = "frame",
             direction = "horizontal",
-            style = "slot_window_frame",
+            style = "wct_gps_frame",
         }
 
-        local subframe = frame.add {
-            name = "__wct_gps_gui_subframe",
+        local flow_container = frame.add {
+            name = "__wct_gps_gui_flow_container",
             type = "frame",
-            style = "mod_gui_inside_deep_frame",
             direction = "horizontal",
+            style = "wct_gps_frame_inside_background",
         }
 
-        local gpstitle = subframe.add {
-            name = "__wct_gps_gui_title",
+        -- temp Label version
+        local gps_title_button = flow_container.add {
+            name = "__wct_gps_gui_title_label",
+            type = "label",
+            direction = "horizontal",
+            style = "wct_gps_title_label",
+            caption = "GPS",
+        }
+
+--[[    TBD Button version
+        local gps_title_button = flow_container.add {
+            name = "__wct_gps_gui_title_button",
             type = "sprite-button",
             direction = "horizontal",
-            style = "wct_gps_title_button",            
+            style = "wct_gps_title_button",
+            caption = "GPS",
+        }]]
+
+        local output_frame = flow_container.add {
+            name = "__wct_gps_gui_output_frame",
+            type = "frame",
+            direction = "vertical",
+            style = "wct_gps_output_frame",
         }
 
-        subframe.add {
-            name = "__wct_gps_gui_lng",
+        local lng_line = output_frame.add {
+            name = "__wct_gps_gui_output_lng_line",
             type = "frame",
             direction = "horizontal",
-            style = "wct_gps_label",
+            style = "wct_gps_output_lng_line",
+        }
+
+        lng_line.add {
+            name = "__wct_gps_gui_output_label",
+            type = "label",
+            style = "wct_gps_output_label",
             caption = "lng",
         }
 
-        subframe.add {
-            name = "__wct_gps_gui_caption_lng",
-            type = "frame",
-            direction = "horizontal",
-            style = "wct_gps_output",
-            caption = "...",
+        lng_line.add {
+            name = "__wct_gps_gui_output_value",
+            type = "label",
+            style = "wct_gps_output_value",
         }
 
-        subframe.add {
-            name = "__wct_gps_gui_lat",
+        local lat_line = output_frame.add {
+            name = "__wct_gps_gui_output_lat_line",
             type = "frame",
             direction = "horizontal",
-            style = "wct_gps_label",
-            caption = "lat",
-        }        
+            style = "wct_gps_output_lat_line",
+        }
 
-        subframe.add {
-            name = "__wct_gps_gui_caption_lat",
-            type = "frame",
-            direction = "horizontal",
-            style = "wct_gps_output",
-            caption = "...",
+        lat_line.add {
+            name = "__wct_gps_gui_output_label",
+            type = "label",
+            style = "wct_gps_output_label",
+            caption = "lat",
+        }
+
+        lat_line.add {
+            name = "__wct_gps_gui_output_value",
+            type = "label",
+            style = "wct_gps_output_value",
         }
     end
 
@@ -65,13 +91,29 @@ __wct_gps_gui.ensure_gui = function(player)
 end
 
 function findLngElement(frame)
-    -- we know where it is, just grab it
-    return frame["__wct_gps_gui_root"]["__wct_gps_gui_subframe"]["__wct_gps_gui_caption_lng"]
+    if frame["__wct_gps_gui_root"]["__wct_gps_gui_flow_container"]
+        and frame["__wct_gps_gui_root"]["__wct_gps_gui_flow_container"]["__wct_gps_gui_output_frame"]
+        and frame["__wct_gps_gui_root"]["__wct_gps_gui_flow_container"]["__wct_gps_gui_output_frame"]["__wct_gps_gui_output_lng_line"]
+        and frame["__wct_gps_gui_root"]["__wct_gps_gui_flow_container"]["__wct_gps_gui_output_frame"]["__wct_gps_gui_output_lng_line"]["__wct_gps_gui_output_value"]
+    then
+        -- we know where it is, just grab it
+        return frame["__wct_gps_gui_root"]["__wct_gps_gui_flow_container"]["__wct_gps_gui_output_frame"]
+        ["__wct_gps_gui_output_lng_line"]["__wct_gps_gui_output_value"]
+    end
+    return nil
 end
 
 function findLatElement(frame)
-    -- we know where it is, just grab it
-    return frame["__wct_gps_gui_root"]["__wct_gps_gui_subframe"]["__wct_gps_gui_caption_lat"]
+    if frame["__wct_gps_gui_root"]["__wct_gps_gui_flow_container"]
+        and frame["__wct_gps_gui_root"]["__wct_gps_gui_flow_container"]["__wct_gps_gui_output_frame"]
+        and frame["__wct_gps_gui_root"]["__wct_gps_gui_flow_container"]["__wct_gps_gui_output_frame"]["__wct_gps_gui_output_lat_line"]
+        and frame["__wct_gps_gui_root"]["__wct_gps_gui_flow_container"]["__wct_gps_gui_output_frame"]["__wct_gps_gui_output_lat_line"]["__wct_gps_gui_output_value"]
+    then
+        -- we know where it is, just grab it
+        return frame["__wct_gps_gui_root"]["__wct_gps_gui_flow_container"]["__wct_gps_gui_output_frame"]
+        ["__wct_gps_gui_output_lat_line"]["__wct_gps_gui_output_value"]
+    end
+    return nil
 end
 
 __wct_gps_gui.update_gui_caption = function(player, frame)

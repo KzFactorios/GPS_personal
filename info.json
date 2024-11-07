@@ -1,10 +1,10 @@
 {
-    "name": "show-player-position",
+    "name": "GPS_personal",
     "author": "kurtzilla",
     "version": "0.1.0",
     "factorio_version": "2.0",
-    "title": "Show Player Position",
-    "description": "Shows players position. This is meant for personal debugging use.",
+    "title": "GPS personal",
+    "description": "Shows players position. This is intended for personal debugging use.",
     "dependencies": [
         "base >= 2.0.0",
         "flib >= 0.15.0"

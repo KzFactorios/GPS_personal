@@ -1,10 +1,3 @@
--- switch to mod-gui approach
--- https://forums.factorio.com/viewtopic.php?t=53020
--- https://github.com/Bilka2/NewGamePlus
-
--- styles  https://lua-api.factorio.com/latest/prototypes/GuiStyle.html
-
-
 local __wct_gps_gui = require("gui")
 
 local _runOnce = false
@@ -22,6 +15,8 @@ script.on_event(defines.events.on_player_changed_position, function(event)
    -- game.print("on player changed position")
 end)
 
+-- TODO I am sure there is a better way, more specific event to hook into
+-- but in the interest of time...I'llget it on the next go-round
 script.on_event(defines.events.on_tick, function(event)
     if not _runOnce then
         -- this is an init so do for all players
@@ -31,7 +26,6 @@ script.on_event(defines.events.on_tick, function(event)
         end
 
         _runOnce = true
-        game.print("run once ran")
+        --game.print("run once ran")
     end
-
 end)
