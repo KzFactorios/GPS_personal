@@ -32,7 +32,9 @@ __wct_gps_gui.update_gui_caption = function(player, gui)
     end
 end
 
--- returns the container of the widgets wheree we can land our own widget
+-- returns the container of the widgets where we can land our own widget
+-- first, try to get from shared top gui
+-- if no go, then make a new top gui to work from
 function get_parent_workspace(player)
     if player then
         local _top = wutils.tableFindByName(player.gui.top.children, _constants.GUITOPFRAME)
@@ -41,30 +43,63 @@ function get_parent_workspace(player)
             if _inner then
                 return _inner
             end
+        else
+            return create_legacy_parent_gui(player)
         end
+    end
+    return nil
+end
+
+function create_legacy_parent_gui(player)
+    if player then
+        local legacy_gui = wutils.tableFindByName(player.gui.top.children, _constants.LEGACYGPS_MODNAME)
+        if not legacy_gui then
+            legacy_gui = player.gui.top.add {
+                name = _constants.LEGACYGPS_MODNAME,
+                type = "frame",
+                direction = "horizontal",
+                style = _constants.LEGACYGPS_MODNAME .. "_container",
+            }
+        end
+
+        return legacy_gui
     end
     return nil
 end
 
 function destroy_common_mod_gui(player)
     if player then
-        local _common = build_gui(player)
+        local _top = wutils.tableFindByName(player.gui.top.children, _constants.GUITOPFRAME)
+        if _top then
+            local _inner = wutils.tableFindByName(_top.children, _constants.GUIINNERFRAME)
+            if _inner then
+                local _gui = wutils.tableFindByName(_inner.children, _constants.GPS_MODNAME)
+                if _gui then
+                    _gui.destroy()
+                end
+            end
+        end
+        --[[local _common = build_gui(player)
         if _common then
             _common.destroy()
             return
-        end
+        end]]
     end
 end
 
 function destroy_legacy_mod_gui(player)
     if player then
+        local legacy_gui = wutils.tableFindByName(player.gui.top.children, _constants.LEGACYGPS_MODNAME)
+        if legacy_gui then
+            legacy_gui.destroy()
+        end
         -- remove any existence of old method
-        for _, v in ipairs(player.gui.top.children) do
+        --[[for _, v in ipairs(player.gui.top.children) do
             if v.name == _constants.LEGACYGPS_MODNAME then
                 v.destroy()
                 return
             end
-        end
+        end]]
     end
 end
 

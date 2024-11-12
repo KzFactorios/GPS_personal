@@ -21,15 +21,17 @@ Date: 2024-11-07
     - TODO link up with map tagger?
     - TODO find correct event to achieve run once
 ---------------------------------------------------------------------------------------------------
-Version: 0.1.1
+Version: 0.1.2
 Date: 2024-11-11
 
-  Features:
+  Notes:
     - HAS NOT BEEN TESTED OUTSIDE OF NAUVIS!!!!!
 
   Changes:
     - Moved mod gui to shared top gui space
     - re-arrange file structure
+    - playing with gui display to make it "join in" when other mods
+    -   are already employing a top gui vs not. 
 
   TODO List:
     - test multiplayer
@@ -37,5 +39,5 @@ Date: 2024-11-11
     - TODO _run_once in control.lua
     - TODO update every ? seconds setting
     - TODO Work on icon - hover styling
-    - TODO click on icon to toggle lat/long display - or ???
+    - TODO click on icon to toggle lat/long display - or flip or ???
     - TODO handle various surfaces? ponder what cost should be assoc with tele to other surfaces

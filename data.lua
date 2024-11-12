@@ -3,6 +3,13 @@ local _constants = require("prototypes/constants")
 local gui = data.raw["gui-style"]["default"]
 
 
+gui[_constants.LEGACYGPS_MODNAME .. "_container"] = {
+    type = "frame_style",
+    parent = "slot_window_frame",
+    --height = 56,
+    padding = 8,
+}
+
 gui[_constants.GPS_MODNAME] = {
     type = "frame_style",
     parent = "invisible_frame", -- spacing is whack in "frame"!!!
@@ -48,5 +55,5 @@ gui[_constants.GPS_MODNAME .. "_value"] = {
     right_padding = 8,
     horizontal_align = "left",
     font = "default-small",
-    font_color = { r = 255, g = 160, b = 32 },
+    font_color = { r = 255, g = 192, b = 64 },
 }
