@@ -1,131 +1,52 @@
-local wutils = require("wct_utils")
+local _constants = require("prototypes/constants")
 
-data.raw["gui-style"]["default"]["wct_gps_frame"] =
-{
+local gui = data.raw["gui-style"]["default"]
+
+
+gui[_constants.GPS_MODNAME] = {
     type = "frame_style",
-    parent = "frame",
-    padding = 4,
-    drag_by_title = false,
-    use_header_filler = false
+    parent = "invisible_frame", -- spacing is whack in "frame"!!!
+    padding = 0,
+    height = 38,
+    left_margin = 2,
+    right_margin = 2,
+    use_header_filler = false,
+    graphical_set = {
+        base = {
+            position = { 0, 0 },
+            size = { 1, 1 },
+            -- can't get color to work 11-11-24
+            --color = { r = 0.7, g = 0.7, b = 0.9, a = 1 },
+        }
+    }
 }
 
-data.raw["gui-style"]["default"]["wct_gps_frame_inside_background"] = {
+gui[_constants.GPS_MODNAME .. "_line"] = {
     type = "frame_style",
-    parent = "mod_gui_inside_deep_frame",
-    height = 42,
+    parent = "invisible_frame",
+    direction = "horizontal_align",
+    padding = 0,
+    top_margin = 1,
+    height = 17,
 }
 
-data.raw["gui-style"]["default"]["wct_gps_title_label"] =
-{
+gui[_constants.GPS_MODNAME .. "_label"] = {
     type = "label_style",
-    parent = "label",
-    padding = 8,
-    top_padding = 4,
-    right_padding = 0,
-    font = "default-large-bold",
-    font_color = { r=255, g=160, b=32 },
-}
-
-data.raw["gui-style"]["default"]["wct_gps_title_button"] =
-{
-    type = "button_style",
-    parent = "slot_button",
-    padding = 8,
-    --font = "default-large-bold",    
-    --minimal_width = 40,
-
-    --[[default_graphical_set = {
-        base = {
-            width = 32,
-            height = 32,
-            border = 1, -- Thin border
-            --filename = "__GPS_personal__/graphics/button.png",
-        },
-    },
-
-    -- Minimal hover effect
-    hovered_graphical_set = {
-        border = 2, -- Border thickness
-        border_color = { r = 255, g = 128, b = 0, a = 255 },
-        base = {
-            width = 31,
-            height = 31,
-            filename = "__GPS_personal__/graphics/button.png",
-            -- No position change means no orange overlay -- Claude LIES!
-        },
-    },
-
-    clicked_graphical_set = {
-        base = {
-            width = 30,
-            height = 30,
-            filename = "__GPS_personal__/graphics/button.png",
-        },
-    },]]
-}
-
-data.raw["gui-style"]["default"]["wct_gps_output_frame"] = {
-    type = "frame_style",
-    parent = "invisible_frame",
-    padding = 0,
-    height = 36,
-}
-
-data.raw["gui-style"]["default"]["wct_gps_output_lng_line"] = {
-    type = "frame_style",
-    parent = "invisible_frame",
-    height = 18,    
-    padding = 0,
-}
-
-data.raw["gui-style"]["default"]["wct_gps_output_lat_line"] = {
-    type = "frame_style",
-    parent = "invisible_frame",
-    height = 18,
-    padding = 0,
-}
-
-data.raw["gui-style"]["default"]["wct_gps_output_label"] = {
-    type = "label_style",
-    font = "default-bold",
-    --font_color = {r = 255, g = 160, b = 32},
+    font = "default-small",
     width = 30,
+    height = 14,
+    padding = 0,
     left_padding = 8,
 }
 
-data.raw["gui-style"]["default"]["wct_gps_output_value"] = {
+gui[_constants.GPS_MODNAME .. "_value"] = {
     type = "label_style",
-    parent = "label",
-    minimal_width = 40,
-    left_padding = 8,
+    minimal_width = 35,
+    height = 14,
+    padding = 0,
+    left_padding = 2,
+    right_padding = 8,
     horizontal_align = "left",
+    font = "default-small",
+    font_color = { r = 255, g = 160, b = 32 },
 }
-
-
-    -- Optional: if you want a slight color change on hover instead
-    --default_sprite_color = {r=1, g=1, b=1},
-    --hovered_sprite_color = {r=255, g=128, b=1},  -- Keep full opacity
-    
-    -- Optional: disable the clicked offset if you don't want the button to move
-    --clicked_vertical_offset = 0
-
-
---[[
-
-local default_orange_color = {
-    r = 255,
-    g = 128,
-    b = 0
-  }
-
-  local hovered_label_color = {
-    r = 0.5 * (1 + default_orange_color.r),
-    g = 0.5 * (1 + default_orange_color.g),
-    b = 0.5 * (1 + default_orange_color.b),
-  }
-data.raw["gui-style"]["default"]["wct_gps_title_button_container"] = {
-    type = "frame_style",
-    parent = "invisible_frame",
-    height = 32,
-    width = 32,
-}]]
